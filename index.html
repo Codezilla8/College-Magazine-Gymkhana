@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NIT Durgapur- Magazine</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -27,1902 +32,892 @@
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
-
                         cinzel: ['Cinzel', 'serif']
-
                     }
-
                 }
-
             }
-
         }
-
     </script>
-
-
-
     <style>
-
         ::-webkit-scrollbar {
-
 width: 6px;
-
         }
-
         ::-webkit-scrollbar-track {
-
 background: #FBF9F5;
-
         }
-
         ::-webkit-scrollbar-thumb {
-
 background: #C4C0B6;
-
 border-radius: 3px;
-
         }
-
         ::-webkit-scrollbar-thumb:hover {
-
 background: #8C6D46;
-
         }
-
         .upload-zone {
-
 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
         }
-
         .upload-zone.dragover {
-
 border-color: #8C6D46;
-
 background-color: rgba(140, 109, 70, 0.05);
-
 transform: scale(1.01);
-
         }
-
     </style>
-
 </head>
-
 <body class="bg-alabaster text-charcoal font-sans antialiased selection:bg-bronze selection:text-white">
-
-
-
     <header class="fixed top-0 left-0 w-full z-50 bg-alabaster/95 backdrop-blur-sm px-6 lg:px-16 py-3 transition-all duration-300 border-b border-charcoal/10">
-
         <div class="max-w-7xl mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-4 text-charcoal">
-
             <a href="#" class="flex items-center justify-start hover:opacity-80 transition-opacity" aria-label="NIT Durgapur home">
-
                 <img src="assets/nit_durgapur_seal_transparent.png" alt="NIT Durgapur Institute Seal" class="h-16 sm:h-20 w-auto max-w-none object-contain">
-
             </a>
-
             <!-- <nav class="flex justify-center items-center gap-6 sm:gap-10 text-[10px] sm:text-xs tracking-widest uppercase font-medium">
-
                 <a href="#guidelines" class="hover:text-bronze transition-colors">Categories</a>
-
                 <a href="#submit" class="hover:text-bronze transition-colors">Submit Work</a>
-
             </nav> -->
-
             <div class="flex items-center justify-end">
-
                 <img src="assets/students_gymkhana_logo_transparent.png" alt="Students' Gymkhana, NIT Durgapur" class="h-16 sm:h-20 w-auto max-w-none object-contain">
-
             </div>
-
         </div>
-
     </header>
-
-
-
     <div id="configModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-
         <div class="bg-alabaster p-8 rounded-2xl max-w-lg w-full shadow-2xl border border-warmgray relative">
-
             <button id="closeConfigBtn" class="absolute top-4 right-4 text-muted hover:text-charcoal">
-
                 <i class="fa-solid fa-xmark text-xl"></i>
-
             </button>
-
             <h3 class="font-serif text-2xl font-semibold mb-2 text-charcoal">Google Form Backend Integration</h3>
-
             <p class="text-xs text-muted mb-6">Connect your Google Form `formResponse` URL so submissions stream directly to your Google Sheets.</p>
-
             <form id="configForm" class="space-y-4">
-
                 <div>
-
                     <label class="block text-xs font-semibold uppercase tracking-wider text-charcoal mb-1">Google Form Action URL</label>
-
                     <input type="url" id="formUrlInput" placeholder="https://docs.google.com/forms/d/e/.../formResponse" class="w-full text-xs p-3 rounded-lg border border-warmgray bg-white focus:outline-none focus:border-bronze">
-
                     <p class="text-[10px] text-muted mt-1">Paste your Google Form submission action link.</p>
-
                 </div>
-
                 <div class="border-t border-warmgray pt-4 mt-4">
-
                     <p class="text-xs font-medium mb-2">Google Form Entry Field IDs:</p>
-
                     <div class="grid grid-cols-2 gap-2 text-xs">
-
                         <input type="text" id="entryName" placeholder="Name Entry ID (e.g. entry.123)" class="p-2 border rounded bg-white text-[11px]">
-
                         <input type="text" id="entryDept" placeholder="Dept Entry ID" class="p-2 border rounded bg-white text-[11px]">
-
                         <input type="text" id="entryYear" placeholder="Year Entry ID" class="p-2 border rounded bg-white text-[11px]">
-
                         <input type="text" id="entryClub" placeholder="Club Entry ID" class="p-2 border rounded bg-white text-[11px]">
-
                         <input type="text" id="entryWork" placeholder="Work Category ID" class="p-2 border rounded bg-white text-[11px]">
-
                     </div>
-
                 </div>
-
                 <div class="flex justify-between items-center pt-4">
-
                     <button type="button" id="resetConfigBtn" class="text-xs text-red-500 hover:underline">Reset Default</button>
-
                     <button type="submit" class="bg-charcoal text-white text-xs px-6 py-2.5 rounded-full hover:bg-bronze transition-colors">Save Settings</button>
-
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
-
-
     <section id="about" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-6 lg:px-16 overflow-hidden">
-
         <div class="max-w-6xl mx-auto text-center relative z-10">
-
             <p class="hero-anim text-xs uppercase tracking-[0.3em] font-semibold text-bronze mb-4">NIT Durgapur — Quarterly Magazine</p>
-
             <h1 class="hero-anim font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight text-editorial leading-[0.95] mb-8">
-
                 NIT DURGAPUR <br><span class="italic font-light text-muted">Magazine 2026-2027</span>
-
             </h1>
-
             <p class="hero-anim max-w-xl mx-auto text-sm sm:text-base text-muted font-light leading-relaxed mb-10">
-
                 Accepting original literature(poems, essays, short stories, etc., in document format) and artwork(pdf or image) or drive links for <span class="text-charcoal font-medium">NIT Durgapur's- College Magazine</span>.
-
             </p>
-
             <div class="hero-anim flex flex-col sm:flex-row justify-center items-center gap-4">
-
                 <a href="#submit" class="w-full sm:w-auto bg-charcoal text-alabaster text-xs tracking-widest uppercase px-8 py-4 rounded-full font-semibold hover:bg-bronze transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-
                     Submit Your Work <i class="fa-solid fa-arrow-down-long ml-2"></i>
-
                 </a>
-
                 <a href="#guidelines" class="w-full sm:w-auto border border-charcoal/20 text-charcoal text-xs tracking-widest uppercase px-8 py-4 rounded-full font-medium hover:border-charcoal transition-all">
-
                     Guidelines & Categories
-
                 </a>
-
             </div>
-
         </div>
-
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-60">
-
             <span class="text-[10px] uppercase tracking-widest text-muted mb-2">Scroll</span>
-
             <div class="w-4 h-7 border border-charcoal/40 rounded-full flex justify-center p-1">
-
                 <div class="w-1 h-1.5 bg-bronze rounded-full animate-bounce"></div>
-
             </div>
-
         </div>
-
     </section>
-
-
-
     <section class="relative h-[80vh] min-h-[800px] overflow-hidden flex items-center justify-center">
-
         <div id="parallaxBg" class="absolute inset-0 w-full h-[140%] -top-[20%] z-0">
-
             <img src="https://placement.nitdgp.ac.in/\_next/static/media/mab.3fe3007b.jpg" 
-
                  alt="NIT Durgapur Campus Architecture" 
-
                  class="w-full h-full object-cover filter brightness-[0.8] contrast-[1.05]"
-
                  onerror="this.src='https://placehold.co/1920x1080/1a1918/ffffff?text=NIT+Durgapur+Campus'">
-
         </div>
-
         <div class="absolute inset-0 bg-gradient-to-t from-alabaster via-transparent to-alabaster/80 z-10"></div>
-
         <div class="relative z-20 max-w-4xl mx-auto text-center px-6 text-white" id="parallaxContent">
-
             <h2 class="font-serif text-3xl sm:text-5xl md:text-6xl font-normal leading-tight mb-6">
-
                 Where Engineering Meets <span class="italic font-light">Literary Brilliance</span>
-
             </h2>
-
             <p class="text-sm sm:text-base text-white/80 max-w-xl mx-auto font-light leading-relaxed">
-
                 The corridors and lecture halls of NIT DGP have fostered generations of storytellers, poets, and visionaries. Upload your work to the Magazine.
-
             </p>
-
         </div>
-
     </section>
-
-
-
     <!-- <section id="canvas-section" class="py-24 px-6 lg:px-16 bg-editorial text-alabaster relative overflow-hidden">
-
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
             <div class="lg:col-span-5 space-y-6 z-10">
-
                 <span class="text-xs uppercase tracking-[0.3em] font-semibold text-bronze">Interactive Edition</span>
-
                 <h2 class="font-serif text-4xl sm:text-5xl font-normal leading-tight">
-
                     Tactile Digital <br><span class="italic font-light text-warmgray/60">Craftsmanship</span>
-
                 </h2>
-
                 <p class="text-muted text-sm leading-relaxed font-light">
-
                     Move your cursor or touch to rotate the 3D issue mockup of NIT DGP Vol. 26. Each page represents prose, poetry, and photography contributed by NIT DGP students.
-
                 </p>
-
             </div>
-
-
-
             <div class="lg:col-span-7 h-[450px] sm:h-[550px] w-full relative rounded-3xl bg-charcoal/50 border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center">
-
                 <div id="canvas3d" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
-
             </div>
-
         </div>
-
     </section> -->
-
-
-
     <section id="guidelines" class="py-24 px-6 lg:px-16 max-w-7xl mx-auto">
-
         <div class="text-center max-w-2xl mx-auto mb-16">
-
             <span class="text-xs uppercase tracking-[0.3em] font-semibold text-bronze">Submission Categories</span>
-
-            <h2 class="font-serif text-3xl sm:text-5xl font-normal mt-2">Open Call for Submissions</h2>
-
+            <h2 class="font-serif text-3xl sm:text-5xl font-normal mt-2">Call for Submissions & Guidelines</h2>
             <p class="text-muted text-sm mt-3 font-light">Minimum of ONE submission required among Prose, Poetry, or Photography. Word files (.doc, .docx) supported for manuscripts.</p>
-
         </div>
-
-
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
             <div class="p-8 rounded-2xl bg-white border border-warmgray hover:border-bronze/50 transition-all duration-300 shadow-sm group">
-
                 <div class="w-12 h-12 rounded-xl bg-alabaster flex items-center justify-center text-bronze text-xl mb-6 group-hover:bg-bronze group-hover:text-white transition-colors">
-
                     <i class="fa-solid fa-feather-pointed"></i>
-
                 </div>
-
                 <h3 class="font-serif text-2xl font-semibold mb-3">Short Stories (Prose)</h3>
-
-                <p class="text-muted text-xs leading-relaxed font-light mb-6">Upload Word documents (.doc, .docx) or PDF files containing your fiction, essays, or narratives.</p>
-
+                <p class="text-muted text-xs leading-relaxed font-light mb-6">Upload Word documents (.doc, .docx) containing your fiction, essays, or narratives.</p>
+                <p class="text-muted text-lg leading-relaxed font-bold mb-6">LIMIT: 250 WORDS MAXIMUM</p>
                 <span class="text-[11px] font-semibold tracking-wider text-bronze uppercase">Accepts Word (.doc, .docx), PDF</span>
-
             </div>
-
-
-
             <div class="p-8 rounded-2xl bg-white border border-warmgray hover:border-bronze/50 transition-all duration-300 shadow-sm group">
-
                 <div class="w-12 h-12 rounded-xl bg-alabaster flex items-center justify-center text-bronze text-xl mb-6 group-hover:bg-bronze group-hover:text-white transition-colors">
-
                     <i class="fa-solid fa-camera"></i>
-
                 </div>
-
                 <h3 class="font-serif text-2xl font-semibold mb-3">Photography / Artwork</h3>
-
                 <p class="text-muted text-xs leading-relaxed font-light mb-6">High-resolution digital photography or artwork files, or share a Google Drive link.</p>
-
+                <p class="text-muted text-lg leading-relaxed font-bold mb-6">LIMIT: 3 IMAGES OR 2 ARTWORKS MAXIMUM</p>
                 <span class="text-[11px] font-semibold tracking-wider text-bronze uppercase">Accepts JPG, PNG, WEBP or Drive Link</span>
-
             </div>
-
-
-
             <div class="p-8 rounded-2xl bg-white border border-warmgray hover:border-bronze/50 transition-all duration-300 shadow-sm group">
-
                 <div class="w-12 h-12 rounded-xl bg-alabaster flex items-center justify-center text-bronze text-xl mb-6 group-hover:bg-bronze group-hover:text-white transition-colors">
-
                     <i class="fa-solid fa-scroll"></i>
-
                 </div>
-
                 <h3 class="font-serif text-2xl font-semibold mb-3">Poetry (Verse)</h3>
-
-                <p class="text-muted text-xs leading-relaxed font-light mb-6">Upload your poetry manuscripts in Word document format (.doc, .docx) or PDF.</p>
-
+                <p class="text-muted text-xs leading-relaxed font-light mb-6">Upload your poetry manuscripts in Word document format (.doc, .docx)</p>
+                <p class="text-muted text-lg leading-relaxed font-bold mb-6">LIMIT: 20 LINES MAXIMUM</p>
                 <span class="text-[11px] font-semibold tracking-wider text-bronze uppercase">Accepts Word (.doc, .docx), PDF</span>
-
             </div>
-
         </div>
-
     </section>
-
-
-
     <section id="submit" class="py-24 px-6 lg:px-16 bg-warmgray/30 border-t border-warmgray">
-
         <div class="max-w-4xl mx-auto">
-
             <div class="text-center mb-12">
-
                 <span class="text-xs uppercase tracking-[0.3em] font-semibold text-bronze">Portal for Submissions</span>
-
                 <h2 class="font-serif text-4xl sm:text-5xl font-normal mt-2">Submit Your Entry</h2>
-
                 <p class="text-muted text-sm mt-3 font-light">Fill out your credentials and upload your Word files or provide links below.</p>
-
             </div>
-
-
-
             <form id="magazineForm" class="bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-warmgray space-y-8">
-
                 <!-- SECTION 1: PERSONAL & ACADEMIC INFO -->
-
                 <div>
-
                     <h4 class="font-serif text-lg font-medium border-b border-warmgray pb-3 mb-6 text-editorial flex items-center">
-
                         <span class="w-6 h-6 rounded-full bg-bronze text-white text-xs flex items-center justify-center mr-3 font-sans">1</span> 
-
                         Student Details
-
                     </h4>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Full Name <span class="text-bronze">*</span>
-
                             </label>
-
                             <input type="text" id="studentName" required placeholder="e.g. Arindam Roy" 
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                         </div>
-
-
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Department <span class="text-bronze">*</span>
-
                             </label>
-
                             <input type="text" id="studentDept" required placeholder="e.g. Computer Science & Engineering" 
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                         </div>
-
-
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Registration Number <span class="text-bronze">*</span>
-
                             </label>
-
                             <input type="text" id="studentRegNo" required placeholder="Enter your registration number" 
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                         </div>
-
-
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Roll Number<span class="text-bronze">*</span>
-
                             </label>
-
                             <input type="text" id="studentRollNo" required placeholder="Enter your roll number"  
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                         </div>
-
-
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Academic Year <span class="text-bronze">*</span>
-
                             </label>
-
                             <select id="studentYear" required class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all text-charcoal">
-
                                 <option value="" disabled selected>Select Academic Year</option>
-
                                 <option value="1st Year">1st Year (B.Tech / MBA / M.Tech)</option>
-
                                 <option value="2nd Year">2nd Year (B.Tech / MBA / M.Tech)</option>
-
                                 <option value="3rd Year">3rd Year (B.Tech)</option>
-
                                 <option value="4th Year">4th Year (B.Tech)</option>
-
                                 <option value="PhD">Postgraduate</option>
-
                                 <option value="Postgraduate">Postgraduate</option>
-
                             </select>
-
                         </div>
-
-
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Club / Society <span class="text-muted text-[10px] font-normal">(Optional)</span>
-
                             </label>
-
                             <input type="text" id="studentClub" 
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                         </div>
-
                         <div class="sm:col-span-2 flex items-start gap-3">
-
                             <input type="checkbox" id="clubConsent" class="mt-1 rounded border-warmgray text-bronze focus:ring-bronze">
-
                             <label for="clubConsent" class="text-xs text-muted leading-relaxed">
-
                                 If my work is featured in the magazine, I give permission for my club/society to be mentioned alongside my name. <span class="text-muted">(Optional)</span>
-
                             </label>
-
                         </div>
-
                     </div>
-
                 </div>
-
-
-
                 <!-- SECTION 2: DRAG AND DROP FILE UPLOAD ZONES -->
-
                 <div>
-
                     <div class="flex justify-between items-center border-b border-warmgray pb-3 mb-6">
-
                         <h4 class="font-serif text-lg font-medium text-editorial flex items-center">
-
                             <span class="w-6 h-6 rounded-full bg-bronze text-white text-xs flex items-center justify-center mr-3 font-sans">2</span> 
-
                             Submissions Content (Word Files, Photography & Drive Links)
-
                         </h4>
-
                         <span class="text-[11px] text-bronze font-medium">* Min one upload required among Prose, Art, or Poetry</span>
-
                     </div>
-
-
-
                     <div class="space-y-6">
-
                         <!-- 1. PROSE (SHORT STORIES) WORD UPLOAD ZONE -->
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Short Stories / Prose (Word file, .doc, .docx)
-
                             </label>
-
                             <div id="proseDropZone" class="upload-zone border-2 border-dashed border-warmgray p-6 rounded-2xl text-center bg-alabaster/60 hover:bg-alabaster cursor-pointer relative">
-
                                 <input type="file" id="proseFileInput" accept=".doc,.docx,.pdf" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
-
                                 <div id="prosePromptContent" class="space-y-2 pointer-events-none">
-
                                     <i class="fa-solid fa-file-word text-3xl text-bronze mb-1"></i>
-
                                     <p class="text-xs font-semibold text-charcoal">Drag & drop your Word file (.doc, .docx) here, or <span class="text-bronze underline">browse files</span></p>
-
                                     <p class="text-[10px] text-muted">Supports Word (.doc, .docx)</p>
-
                                 </div>
-
                                 <div id="proseFilePreview" class="hidden flex items-center justify-between bg-white p-4 rounded-xl border border-warmgray text-left z-20 relative">
-
                                     <div class="flex items-center space-x-3">
-
                                         <div class="w-10 h-10 rounded-lg bg-bronze/10 text-bronze flex items-center justify-center text-lg">
-
                                             <i class="fa-solid fa-file-word"></i>
-
                                         </div>
-
                                         <div>
-
                                             <p id="proseFileName" class="text-xs font-semibold text-charcoal truncate max-w-xs"></p>
-
                                             <p id="proseFileSize" class="text-[10px] text-muted"></p>
-
                                         </div>
-
                                     </div>
-
                                     <button type="button" id="removeProseBtn" class="text-xs text-red-500 hover:text-red-700 p-2 z-30">
-
                                         <i class="fa-solid fa-trash-can"></i>
-
                                     </button>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                         <!-- 2. PHOTOGRAPHY / ARTWORK UPLOAD ZONE OR DRIVE LINK -->
-
                         <div class="space-y-2">
-
                             <div class="flex justify-between items-center mb-1">
-
                                 <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                     Photography / Artwork (File or Google Drive Link)
-
                                 </label>
-
                                 <div class="flex space-x-2 text-[11px]">
-
                                     <button type="button" id="artModeFile" class="text-bronze font-semibold underline focus:outline-none">Upload File</button>
-
                                     <span class="text-muted">/</span>
-
                                     <button type="button" id="artModeLink" class="text-muted hover:text-charcoal focus:outline-none">Google Drive Link</button>
-
                                 </div>
-
                             </div>
-
-
-
                             <div id="artDropZoneContainer">
-
                                 <div id="artDropZone" class="upload-zone border-2 border-dashed border-warmgray p-6 rounded-2xl text-center bg-alabaster/60 hover:bg-alabaster cursor-pointer relative">
-
-                                    <input type="file" id="artFileInput" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
-
+                                    <input type="file" id="artFileInput" accept="image/jpeg,image/png,image/webp" multiple class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
                                     <div id="artPromptContent" class="space-y-2 pointer-events-none">
-
                                         <i class="fa-solid fa-camera text-3xl text-bronze mb-1"></i>
-
                                         <p class="text-xs font-semibold text-charcoal">Drag & drop high-res artwork/photo here, or <span class="text-bronze underline">browse images</span></p>
-
                                         <p class="text-[10px] text-muted">Supports JPG, PNG, WEBP up to 30MB</p>
-
                                     </div>
-
                                     <div id="artFilePreview" class="hidden flex items-center justify-between bg-white p-4 rounded-xl border border-warmgray text-left z-20 relative">
-
                                         <div class="flex items-center space-x-3">
-
                                             <img id="artThumbImg" src="" alt="Artwork Thumbnail" class="w-12 h-12 object-cover rounded-lg border">
-
                                             <div>
-
                                                 <p id="artFileName" class="text-xs font-semibold text-charcoal truncate max-w-xs"></p>
-
                                                 <p id="artFileSize" class="text-[10px] text-muted"></p>
-
                                             </div>
-
                                         </div>
-
                                         <button type="button" id="removeArtBtn" class="text-xs text-red-500 hover:text-red-700 p-2 z-30">
-
                                             <i class="fa-solid fa-trash-can"></i>
-
                                         </button>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
-
-
                             <div id="artLinkContainer" class="hidden">
-
                                 <div class="bg-alabaster p-4 rounded-2xl border border-warmgray space-y-2">
-
                                     <div class="flex items-center space-x-3">
-
                                         <div class="w-10 h-10 rounded-lg bg-bronze/10 text-bronze flex items-center justify-center text-lg">
-
                                             <i class="fa-brands fa-google-drive"></i>
-
                                         </div>
-
                                         <div class="flex-1">
-
                                             <input type="url" id="artDriveLinkInput" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" class="w-full p-3.5 text-xs bg-white border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all">
-
                                         </div>
-
                                     </div>
-
                                     <p class="text-[10px] text-muted pl-1">Ensure Google Drive link sharing permission is set to "Anyone with the link can view".</p>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                         <!-- Optional caption for photography/artwork -->
-
                         <div class="space-y-2 mt-4">
-
                             <label for="artCaption" class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Caption for Photography / Artwork <span class="text-muted text-[10px] font-normal">(Optional)</span>
-
                             </label>
-
                             <textarea id="artCaption" rows="3" placeholder="Enter a title or caption for your photograph/artwork..."
-
                                 class="w-full p-3.5 text-xs bg-alabaster border border-warmgray rounded-xl focus:ring-2 focus:ring-bronze/30 focus:border-bronze focus:outline-none transition-all"></textarea>
-
                         </div>
-
-
-
                         <!-- 3. POETRY WORD UPLOAD ZONE -->
-
                         <div class="space-y-2">
-
                             <label class="block text-xs uppercase tracking-wider font-semibold text-charcoal">
-
                                 Poetry / Verse (Word file, .doc, .docx)
-
                             </label>
-
                             <div id="poetryDropZone" class="upload-zone border-2 border-dashed border-warmgray p-6 rounded-2xl text-center bg-alabaster/60 hover:bg-alabaster cursor-pointer relative">
-
                                 <input type="file" id="poetryFileInput" accept=".doc,.docx,.pdf" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
-
                                 <div id="poetryPromptContent" class="space-y-2 pointer-events-none">
-
                                     <i class="fa-solid fa-scroll text-3xl text-bronze mb-1"></i>
-
                                     <p class="text-xs font-semibold text-charcoal">Drag & drop your Poetry Word file (.doc, .docx) here, or <span class="text-bronze underline">browse files</span></p>
-
                                     <p class="text-[10px] text-muted">Supports Word (.doc, .docx)</p>
-
                                 </div>
-
                                 <div id="poetryFilePreview" class="hidden flex items-center justify-between bg-white p-4 rounded-xl border border-warmgray text-left z-20 relative">
-
                                     <div class="flex items-center space-x-3">
-
                                         <div class="w-10 h-10 rounded-lg bg-bronze/10 text-bronze flex items-center justify-center text-lg">
-
                                             <i class="fa-solid fa-file-word"></i>
-
                                         </div>
-
                                         <div>
-
                                             <p id="poetryFileName" class="text-xs font-semibold text-charcoal truncate max-w-xs"></p>
-
                                             <p id="poetryFileSize" class="text-[10px] text-muted"></p>
-
                                         </div>
-
                                     </div>
-
                                     <button type="button" id="removePoetryBtn" class="text-xs text-red-500 hover:text-red-700 p-2 z-30">
-
                                         <i class="fa-solid fa-trash-can"></i>
-
                                     </button>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                     </div>
-
                 </div>
-
-
-
                 <!-- Terms Checkbox -->
-
                 <div class="flex items-start space-x-3 pt-2">
-
                     <input type="checkbox" id="terms" required class="mt-1 rounded border-warmgray text-bronze focus:ring-bronze">
-
                     <label for="terms" class="text-xs text-muted font-light leading-snug">
-
                         I confirm that all uploaded files and works are my original creations and grant permission to <span class="text-charcoal font-medium">NIT Durgapur</span> for publication.
-
                     </label>
-
                 </div>
-
-
-
                 <!-- Status Alert Box -->
-
                 <div id="statusAlert" class="hidden p-4 rounded-xl text-xs flex items-center space-x-3"></div>
-
-
-
                 <!-- Submit Button -->
-
                 <div class="pt-4">
-
                     <button type="submit" id="submitBtn" class="w-full bg-editorial text-alabaster py-4 rounded-xl font-semibold tracking-widest uppercase text-xs hover:bg-bronze transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
-
                         <span>Submit to NIT Durgapur Magazine</span>
-
                         <i class="fa-solid fa-paper-plane text-xs"></i>
-
                     </button>
-
                 </div>
-
             </form>
-
         </div>
-
     </section>
-
-
-
     <!-- <footer class="bg-editorial text-alabaster py-16 px-6 lg:px-16 border-t border-white/10">
-
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-
             <div class="space-y-2 text-center md:text-left">
-
                 <a href="#" class="font-cinzel tracking-widest text-2xl font-bold uppercase">NIT DGP Magazine</a>
-
                 <p class="text-xs text-muted max-w-sm font-light">The Official Student Literary & Arts Journal of NIT Durgapur.</p>
-
             </div>
-
             <div class="flex space-x-6 text-xs text-muted">
-
                 <a href="#" class="hover:text-alabaster transition-colors">Archive</a>
-
                 <a href="#" class="hover:text-alabaster transition-colors">Editorial Board</a>
-
                 <a href="#" class="hover:text-alabaster transition-colors">Contact Editorial</a>
-
                 <a href="#" class="hover:text-alabaster transition-colors">NIT Durgapur</a>
-
             </div>
-
             <div class="text-xs text-muted font-mono">
-
                 &copy; 2026 NIT DGP Magazine. All Rights Reserved.
-
             </div>
-
         </div>
-
     </footer> -->
-
-
-
     <!-- <footer class="bg-editorial text-alabaster py-12 px-6 lg:px-16 border-t border-white/10">
-
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1.1fr_1.3fr_1fr] items-center gap-8">
-
         <div class="space-y-2 text-center md:text-left">
-
             <a href="#"
-
                class="font-cinzel tracking-widest text-2xl font-bold uppercase">
-
                 NIT Durgapur's Quarterly Magazine
-
             </a>
-
         </div>
-
         <div class="md:border-x md:border-white/15 md:px-6 py-2 text-center space-y-5">
-
             <p class="text-sm text-muted font-light whitespace-nowrap">
-
                 Made by The Debating Society in association with QuizInc and the Student's Gymkhana
-
             </p>
-
             <div class="flex items-center justify-center gap-5">
-
                 <img
-
                     src="assets/debating-society-logo.png"
-
                     alt="The Debating Society"
-
                     class="h-14 w-14 object-contain"
-
                 />
-
                 <span class="text-3xl font-extralight text-muted" aria-hidden="true">
-
                     ×
-
                 </span>
-
                 <img
-
                     src="assets/quizinc-logo.png"
-
                     alt="QuizInc"
-
                     class="h-14 w-28 object-contain"
-
                 />
-
             </div>
-
         </div>
-
         <div class="text-xs text-muted font-mono text-center md:text-right">
-
             &copy; 2026 NIT Durgapur. All Rights Reserved.
-
         </div>
-
     </div>
-
     </footer> -->
-
-
-
-
-
 <footer class="bg-editorial text-alabaster py-10 sm:py-12 px-5 sm:px-6 lg:px-16 border-t border-white/10">
-
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1.1fr_1.3fr_1fr] items-center gap-7 md:gap-8">
-
-
-
         <!-- Magazine title -->
-
         <div class="min-w-0 space-y-2 text-center md:text-left">
-
             <a href="#"
-
                class="font-cinzel tracking-widest text-xl sm:text-2xl font-bold uppercase leading-relaxed">
-
                 NIT Durgapur's Quarterly Magazine
-
             </a>
-
         </div>
-
-
-
         <!-- Collaboration credits and logos -->
-
         <div class="min-w-0 md:border-x md:border-white/15 md:px-5 lg:px-6 py-2 text-center space-y-4 sm:space-y-5">
-
-
-
             <p class="text-xs sm:text-sm text-muted font-light leading-relaxed">
-
                 Made by The Debating Society in association with QuizInc and the Student's Gymkhana
-
             </p>
-
-
-
             <div class="flex items-center justify-center gap-4 sm:gap-5">
-
                 <img
-
                     src="assets/debating-society-logo.png"
-
                     alt="The Debating Society"
-
                     class="h-10 w-auto sm:h-14 object-contain"
-
                 />
-
-
-
                 <span class="text-2xl sm:text-3xl font-extralight text-muted"
-
                       aria-hidden="true">×</span>
-
-
-
                 <img
-
                     src="assets/quizinc-logo.png"
-
                     alt="QuizInc"
-
                     class="h-10 w-auto sm:h-14 max-w-[100px] sm:max-w-[112px] object-contain"
-
                 />
-
             </div>
-
         </div>
-
-
-
         <!-- Copyright -->
-
-        <div class="text-[10px] sm:text-xs text-muted font-mono text-center md:text-right leading-relaxed">
-
+        <div>
+            <div class="text-[10px] sm:text-xs text-muted font-mono text-center md:text-right leading-relaxed">
             &copy; 2026 NIT Durgapur. All Rights Reserved.
-
         </div>
-
-
-
+        <div class="text-[10px] sm:text-xs text-muted font-mono text-center md:text-right leading-relaxed">
+            For Queries Contact: XXXXX-XXXXX, <br>YYYYY-YYYYY
+        </div>
+        </div>
     </div>
-
 </footer>
-
-
-
-
-
     <script>
-
         // Google Form Configuration State
-
 let formConfig = {
-
             actionUrl: localStorage.getItem('lumen_nitdgp_form_url') || '',
-
             entries: {
-
                 name: localStorage.getItem('lumen_nitdgp_entry_name') || 'entry.1000001',
-
                 dept: localStorage.getItem('lumen_nitdgp_entry_dept') || 'entry.1000002',
-
                 year: localStorage.getItem('lumen_nitdgp_entry_year') || 'entry.1000003',
-
                 club: localStorage.getItem('lumen_nitdgp_entry_club') || 'entry.1000004',
-
                 work: localStorage.getItem('lumen_nitdgp_entry_work') || 'entry.1000005'
-
             }
-
         };
-
-
-
         // File State Trackers & Drive Link
-
 let uploadedFiles = {
-
             prose: null,
-
-            art: null,
-
+            art: [],
             poetry: null
-
         };
-
 let artDriveLink = '';
-
-
-
         // --- 1. MODAL CONFIGURATION LOGIC ---
-
 const configModal = document.getElementById('configModal');
-
 const configBtn = document.getElementById('configBtn');
-
 const closeConfigBtn = document.getElementById('closeConfigBtn');
-
 const configForm = document.getElementById('configForm');
-
 const resetConfigBtn = document.getElementById('resetConfigBtn');
-
-
-
         document.getElementById('formUrlInput').value = formConfig.actionUrl;
-
         document.getElementById('entryName').value = formConfig.entries.name;
-
         document.getElementById('entryDept').value = formConfig.entries.dept;
-
         document.getElementById('entryYear').value = formConfig.entries.year;
-
         document.getElementById('entryClub').value = formConfig.entries.club;
-
         document.getElementById('entryWork').value = formConfig.entries.work;
-
-
-
         if (configBtn) {
-
             configBtn.addEventListener('click', () => configModal.classList.remove('hidden'));
-
         }
-
         closeConfigBtn.addEventListener('click', () => configModal.classList.add('hidden'));
-
         configModal.addEventListener('click', (e) => { if(e.target === configModal) configModal.classList.add('hidden'); });
-
-
-
         configForm.addEventListener('submit', (e) => {
-
 e.preventDefault();
-
             formConfig.actionUrl = document.getElementById('formUrlInput').value.trim();
-
             formConfig.entries.name = document.getElementById('entryName').value.trim();
-
             formConfig.entries.dept = document.getElementById('entryDept').value.trim();
-
             formConfig.entries.year = document.getElementById('entryYear').value.trim();
-
             formConfig.entries.club = document.getElementById('entryClub').value.trim();
-
             formConfig.entries.work = document.getElementById('entryWork').value.trim();
-
-
-
             localStorage.setItem('lumen_nitdgp_form_url', formConfig.actionUrl);
-
             localStorage.setItem('lumen_nitdgp_entry_name', formConfig.entries.name);
-
             localStorage.setItem('lumen_nitdgp_entry_dept', formConfig.entries.dept);
-
             localStorage.setItem('lumen_nitdgp_entry_year', formConfig.entries.year);
-
             localStorage.setItem('lumen_nitdgp_entry_club', formConfig.entries.club);
-
             localStorage.setItem('lumen_nitdgp_entry_work', formConfig.entries.work);
-
-
-
             configModal.classList.add('hidden');
-
             showStatus('Google Form configuration saved successfully!', 'success');
-
         });
-
-
-
         resetConfigBtn.addEventListener('click', () => {
-
             localStorage.clear();
-
             formConfig.actionUrl = '';
-
             document.getElementById('formUrlInput').value = '';
-
             configModal.classList.add('hidden');
-
             showStatus('Settings reset to default.', 'success');
-
         });
-
-
-
 function showStatus(msg, type) {
-
 const alertBox = document.getElementById('statusAlert');
-
             alertBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'bg-red-50', 'text-red-800', 'border', 'border-emerald-200', 'border-red-200');
-
             if(type === 'success') {
-
                 alertBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
-
                 alertBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-base"></i><span>${msg}</span>`;
-
             } else {
-
                 alertBox.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-200');
-
                 alertBox.innerHTML = `<i class="fa-solid fa-circle-exclamation text-red-600 text-base"></i><span>${msg}</span>`;
-
             }
-
             setTimeout(() => alertBox.classList.add('hidden'), 6000);
-
         }
-
-
-
         // --- 2. ARTWORK MODE TOGGLE (FILE vs DRIVE LINK) ---
-
 const artModeFileBtn = document.getElementById('artModeFile');
-
 const artModeLinkBtn = document.getElementById('artModeLink');
-
 const artDropContainer = document.getElementById('artDropZoneContainer');
-
 const artLinkContainer = document.getElementById('artLinkContainer');
-
 const artDriveLinkInput = document.getElementById('artDriveLinkInput');
-
-
-
         artModeFileBtn.addEventListener('click', () => {
-
             artModeFileBtn.classList.add('text-bronze', 'font-semibold', 'underline');
-
             artModeFileBtn.classList.remove('text-muted');
-
             artModeLinkBtn.classList.remove('text-bronze', 'font-semibold', 'underline');
-
             artModeLinkBtn.classList.add('text-muted');
-
             artDropContainer.classList.remove('hidden');
-
             artLinkContainer.classList.add('hidden');
-
             artDriveLinkInput.value = '';
-
             artDriveLink = '';
-
         });
-
-
-
         artModeLinkBtn.addEventListener('click', () => {
-
             artModeLinkBtn.classList.add('text-bronze', 'font-semibold', 'underline');
-
             artModeLinkBtn.classList.remove('text-muted');
-
             artModeFileBtn.classList.remove('text-bronze', 'font-semibold', 'underline');
-
             artModeFileBtn.classList.add('text-muted');
-
             artLinkContainer.classList.remove('hidden');
-
             artDropContainer.classList.add('hidden');
-
             uploadedFiles.art = null;
-
             document.getElementById('artFileInput').value = '';
-
             document.getElementById('artFilePreview').classList.add('hidden');
-
             document.getElementById('artPromptContent').classList.remove('hidden');
-
         });
-
-
-
         artDriveLinkInput.addEventListener('input', (e) => {
-
             artDriveLink = e.target.value.trim();
-
         });
-
-
-
         // --- 3. DRAG AND DROP FILE UPLOAD HANDLERS ---
-
 function setupDropZone(type, inputId, dropZoneId, promptId, previewId, nameId, sizeId, removeBtnId, thumbId = null) {
-
 const input = document.getElementById(inputId);
-
 const dropZone = document.getElementById(dropZoneId);
-
 const promptContent = document.getElementById(promptId);
-
 const previewContent = document.getElementById(previewId);
-
 const fileNameEl = document.getElementById(nameId);
-
 const fileSizeEl = document.getElementById(sizeId);
-
 const removeBtn = document.getElementById(removeBtnId);
-
-
-
             ['dragenter', 'dragover'].forEach(eventName => {
-
                 dropZone.addEventListener(eventName, (e) => {
-
 e.preventDefault();
-
 e.stopPropagation();
-
                     dropZone.classList.add('dragover');
-
                 }, false);
-
             });
-
-
-
             ['dragleave', 'drop'].forEach(eventName => {
-
                 dropZone.addEventListener(eventName, (e) => {
-
 e.preventDefault();
-
 e.stopPropagation();
-
                     dropZone.classList.remove('dragover');
-
                 }, false);
-
             });
-
-
-
             dropZone.addEventListener('drop', (e) => {
-
 const files = e.dataTransfer.files;
-
                 if(files.length > 0) {
-
                     input.files = files;
-
-                    handleFileSelection(type, files[0]);
-
+                    if (type === 'art') handleArtFileSelection(Array.from(files));
+                    else handleFileSelection(type, files[0]);
                 }
-
             });
-
-
-
             input.addEventListener('change', (e) => {
-
                 if(input.files.length > 0) {
-
-                    handleFileSelection(type, input.files[0]);
-
+                    if (type === 'art') handleArtFileSelection(Array.from(input.files));
+                    else handleFileSelection(type, input.files[0]);
                 }
-
             });
-
-
-
             removeBtn.addEventListener('click', (e) => {
-
 e.stopPropagation();
-
                 input.value = '';
-
                 uploadedFiles[type] = null;
-
                 promptContent.classList.remove('hidden');
-
                 previewContent.classList.add('hidden');
-
             });
-
-
-
-function handleFileSelection(fileType, file) {
-
+function handleArtFileSelection(files) {
+                const validFiles = files.filter(file => ['image/jpeg', 'image/png', 'image/webp'].includes(file.type));
+                if (validFiles.length !== files.length) {
+                    showStatus('Please select only JPG, PNG, or WEBP images.', 'error');
+                    return;
+                }
+                if (validFiles.length > 3) {
+                    showStatus('Please select a maximum of 3 images.', 'error');
+                    document.getElementById('artFileInput').value = '';
+                    uploadedFiles.art = [];
+                    document.getElementById('artFilePreview').classList.add('hidden');
+                    document.getElementById('artPromptContent').classList.remove('hidden');
+                    return;
+                }
+                uploadedFiles.art = validFiles;
+                const fileNameEl = document.getElementById('artFileName');
+                const fileSizeEl = document.getElementById('artFileSize');
+                const thumb = document.getElementById('artThumbImg');
+                fileNameEl.textContent = validFiles.map(file => file.name).join(', ');
+                const totalSize = validFiles.reduce((sum, file) => sum + file.size, 0);
+                fileSizeEl.textContent = validFiles.length + ' image' + (validFiles.length === 1 ? '' : 's') + ' · ' + (totalSize / (1024 * 1024)).toFixed(2) + ' MB total';
+                if (thumb && validFiles[0]) {
+                    const reader = new FileReader();
+                    reader.onload = event => { thumb.src = event.target.result; };
+                    reader.readAsDataURL(validFiles[0]);
+                }
+                document.getElementById('artPromptContent').classList.add('hidden');
+                document.getElementById('artFilePreview').classList.remove('hidden');
+            }
+            function handleFileSelection(fileType, file) {
                 uploadedFiles[fileType] = file;
-
+                uploadedFiles[fileType] = file;
                 fileNameEl.textContent = file.name;
-
                 fileSizeEl.textContent = (file.size / (1024*1024)).toFixed(2) + ' MB';
-
                 if(thumbId && file.type.startsWith('image/')) {
-
 const reader = new FileReader();
-
                     reader.onload = (e) => {
-
                         document.getElementById(thumbId).src = e.target.result;
-
                     };
-
                     reader.readAsDataURL(file);
-
                 }
-
-
-
                 promptContent.classList.add('hidden');
-
                 previewContent.classList.remove('hidden');
-
             }
-
         }
-
-
-
         setupDropZone('prose', 'proseFileInput', 'proseDropZone', 'prosePromptContent', 'proseFilePreview', 'proseFileName', 'proseFileSize', 'removeProseBtn');
-
         setupDropZone('art', 'artFileInput', 'artDropZone', 'artPromptContent', 'artFilePreview', 'artFileName', 'artFileSize', 'removeArtBtn', 'artThumbImg');
-
         setupDropZone('poetry', 'poetryFileInput', 'poetryDropZone', 'poetryPromptContent', 'poetryFilePreview', 'poetryFileName', 'poetryFileSize', 'removePoetryBtn');
-
-
-
         // --- 4. GSAP SCROLLTRIGGER PARALLAX ---
-
         window.addEventListener('load', () => {
-
             gsap.registerPlugin(ScrollTrigger);
-
-
-
             gsap.from(".hero-anim", {
-
                 y: 40,
-
                 opacity: 0,
-
                 duration: 1.2,
-
                 stagger: 0.15,
-
                 ease: "power3.out"
-
             });
-
-
-
             // Parallax campus background (moves slower than normal scroll)
-
             gsap.to("#parallaxBg", {
-
                 yPercent: 25,
-
                 ease: "none",
-
                 scrollTrigger: {
-
                     trigger: "#parallaxBg",
-
                     start: "top bottom",
-
                     end: "bottom top",
-
                     scrub: true
-
                 }
-
             });
-
-
-
             gsap.from("#parallaxContent", {
-
                 y: 60,
-
                 opacity: 0,
-
                 duration: 1,
-
                 scrollTrigger: {
-
                     trigger: "#parallaxContent",
-
                     start: "top 80%",
-
                     toggleActions: "play none none reverse"
-
                 }
-
             });
-
         });
-
-
-
         // --- 5. THREE.JS 3D INTERACTIVE MAGAZINE MODEL ---
-
 function init3DScene() {
-
 const container = document.getElementById('canvas3d');
-
             if (!container) return;
-
-
-
 const scene = new THREE.Scene();
-
 const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-
             camera.position.set(0, 0, 7);
-
-
-
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
             renderer.setSize(container.clientWidth, container.clientHeight);
-
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
             container.appendChild(renderer.domElement);
-
-
-
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-
             scene.add(ambientLight);
-
-
-
 const dirLight = new THREE.DirectionalLight(0xfff5e6, 1.2);
-
             dirLight.position.set(5, 8, 5);
-
             scene.add(dirLight);
-
-
-
 const bookGroup = new THREE.Group();
-
-
-
 const canvas = document.createElement('canvas');
-
             canvas.width = 512;
-
             canvas.height = 700;
-
 const ctx = canvas.getContext('2d');
-
             ctx.fillStyle = '#121212';
-
             ctx.fillRect(0, 0, 512, 700);
-
             ctx.fillStyle = '#8C6D46';
-
             ctx.fillRect(20, 20, 472, 660);
-
             ctx.fillStyle = '#121212';
-
             ctx.fillRect(30, 30, 452, 640);
-
             ctx.fillStyle = '#FBF9F5';
-
             ctx.font = 'bold 36px serif';
-
             ctx.fillText('NIT DGP', 60, 120);
-
             ctx.font = '13px sans-serif';
-
             ctx.fillText('MAGAZINE', 60, 155);
-
             ctx.fillStyle = '#8C6D46';
-
             ctx.fillRect(60, 185, 120, 3);
-
             ctx.fillStyle = '#A09D96';
-
             ctx.font = '12px sans-serif';
-
             ctx.fillText('LITERARY & ARTS ANTHOLOGY', 60, 215);
-
-
-
 const coverTexture = new THREE.CanvasTexture(canvas);
-
 const coverMat = new THREE.MeshStandardMaterial({ map: coverTexture, roughness: 0.3 });
-
 const pageMat = new THREE.MeshStandardMaterial({ color: 0xFBF9F5, roughness: 0.8 });
-
 const spineMat = new THREE.MeshStandardMaterial({ color: 0x8C6D46, roughness: 0.4 });
-
-
-
 const materials = [pageMat, spineMat, pageMat, pageMat, coverMat, coverMat];
-
 const geometry = new THREE.BoxGeometry(2.4, 3.2, 0.3);
-
 const book = new THREE.Mesh(geometry, materials);
-
             bookGroup.add(book);
-
             scene.add(bookGroup);
-
-
-
 let isDragging = false;
-
 let previousMousePosition = { x: 0, y: 0 };
-
-
-
             container.addEventListener('mousedown', (e) => {
-
                 isDragging = true;
-
                 previousMousePosition = { x: e.clientX, y: e.clientY };
-
             });
-
-
-
             window.addEventListener('mousemove', (e) => {
-
                 if (!isDragging) return;
-
 const deltaX = e.clientX - previousMousePosition.x;
-
 const deltaY = e.clientY - previousMousePosition.y;
-
-
-
                 bookGroup.rotation.y += deltaX * 0.008;
-
                 bookGroup.rotation.x += deltaY * 0.008;
-
-
-
                 previousMousePosition = { x: e.clientX, y: e.clientY };
-
             });
-
-
-
             window.addEventListener('mouseup', () => { isDragging = false; });
-
-
-
             // Touch support for mobile
-
             container.addEventListener('touchstart', (e) => {
-
                 if(e.touches.length === 1) {
-
                     isDragging = true;
-
                     previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-
                 }
-
             });
-
-
-
             window.addEventListener('touchmove', (e) => {
-
                 if(!isDragging || e.touches.length !== 1) return;
-
 const deltaX = e.touches[0].clientX - previousMousePosition.x;
-
 const deltaY = e.touches[0].clientY - previousMousePosition.y;
-
-
-
                 bookGroup.rotation.y += deltaX * 0.008;
-
                 bookGroup.rotation.x += deltaY * 0.008;
-
-
-
                 previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-
             });
-
-
-
             window.addEventListener('touchend', () => { isDragging = false; });
-
-
-
 function animate() {
-
                 requestAnimationFrame(animate);
-
                 if (!isDragging) {
-
                     bookGroup.rotation.y += 0.004;
-
                 }
-
                 renderer.render(scene, camera);
-
             }
-
             animate();
-
-
-
             window.addEventListener('resize', () => {
-
                 camera.aspect = container.clientWidth / container.clientHeight;
-
                 camera.updateProjectionMatrix();
-
                 renderer.setSize(container.clientWidth, container.clientHeight);
-
             });
-
         }
-
-
-
         window.addEventListener('DOMContentLoaded', init3DScene);
-
-
-
         // --- 6. FORM SUBMISSION VALIDATION & GOOGLE APPS SCRIPT DISPATCH ---
-
         // After deploying the companion Code.gs as a Web App, paste its /exec URL below.
-
 const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw03Mg5xm20PTigHZsrBLiAuOHHkqqggVcDf-uWwEIM8OYMsYXpLM30UxKoTOLVxbjD/exec';
-
 const magazineForm = document.getElementById('magazineForm');
-
         magazineForm.addEventListener('submit', async (e) => {
-
 e.preventDefault();
-
-
-
 const registrationNumber = document.getElementById('studentRegNo').value.trim();
             const rollNumber = document.getElementById('studentRollNo').value.trim();
             if (!registrationNumber || !rollNumber) {
                 showStatus('Please enter both your Registration Number and Roll Number.', 'error');
                 return;
             }
-
-            const hasArt = uploadedFiles.art || artDriveLink;
-
+            const hasArt = uploadedFiles.art.length > 0 || artDriveLink;
             if (!uploadedFiles.prose && !hasArt && !uploadedFiles.poetry) {
-
                 showStatus('Please provide at least one submission (Prose Word file, Photography/Artwork file or Drive link, or Poetry Word file).', 'error');
-
                 return;
-
             }
-
-
-
             if (!APPS_SCRIPT_ENDPOINT.startsWith('https://script.google.com/macros/s/') || APPS_SCRIPT_ENDPOINT.includes('PASTE_YOUR')) {
-
                 showStatus('One-time setup needed: deploy the included Google Apps Script, then paste its Web App URL into APPS_SCRIPT_ENDPOINT in this HTML file. No submission has been sent.', 'error');
-
                 return;
-
             }
-
-
-
             // Apps Script has request-size limits. Keep the combined upload comfortably below them.
-
-const selectedFiles = [uploadedFiles.prose, uploadedFiles.art, uploadedFiles.poetry].filter(Boolean);
-
+const selectedFiles = [uploadedFiles.prose, ...uploadedFiles.art, uploadedFiles.poetry].filter(Boolean);
 const totalBytes = selectedFiles.reduce((sum, file) => sum + file.size, 0);
-
             if (totalBytes > 15 * 1024 * 1024) {
-
                 showStatus('Please keep the combined size of all uploaded files under 15 MB, then submit again.', 'error');
-
                 return;
-
             }
-
-
-
 const submitBtn = document.getElementById('submitBtn');
-
 const originalButtonHTML = submitBtn.innerHTML;
-
             submitBtn.disabled = true;
-
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Submitting...</span>';
-
-
-
             try {
-
 const toBase64 = (file) => new Promise((resolve, reject) => {
-
 const reader = new FileReader();
-
                     reader.onload = () => resolve({
-
                         name: file.name,
-
                         mimeType: file.type || 'application/octet-stream',
-
                         size: file.size,
-
                         base64: String(reader.result).split(',')[1]
-
                     });
-
                     reader.onerror = () => reject(new Error('Could not read ' + file.name));
-
                     reader.readAsDataURL(file);
-
                 });
-
-
-
 const files = {};
-
                 if (uploadedFiles.prose) files.prose = await toBase64(uploadedFiles.prose);
-
-                if (uploadedFiles.art) files.art = await toBase64(uploadedFiles.art);
-
+                if (uploadedFiles.art.length) files.art = await Promise.all(uploadedFiles.art.map(toBase64));
                 if (uploadedFiles.poetry) files.poetry = await toBase64(uploadedFiles.poetry);
-
-
-
 const payload = {
-
                     source: 'NIT DGP Magazine website',
-
                     submittedAt: new Date().toISOString(),
-
                     name: document.getElementById('studentName').value.trim(),
-
                     registrationNumber: document.getElementById('studentRegNo').value.trim(),
-
                     rollNumber: document.getElementById('studentRollNo').value.trim(),
-
                     department: document.getElementById('studentDept').value.trim(),
-
                     academicYear: document.getElementById('studentYear').value,
-
                     clubSociety: document.getElementById('studentClub').value.trim(),
-
                     clubConsent: document.getElementById('clubConsent').checked ? 'Yes' : 'No',
-
                     artworkCaption: document.getElementById('artCaption').value.trim(),
-
                     artworkDriveLink: artDriveLink || '',
-
                     files
-
                 };
-
-
-
                 // Apps Script Web Apps often return an opaque cross-origin response. The request is
-
                 // sent in no-cors mode; the endpoint writes to Drive/Sheets server-side.
-
                 await fetch(APPS_SCRIPT_ENDPOINT, {
-
                     method: 'POST',
-
                     mode: 'no-cors',
-
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-
                     body: JSON.stringify(payload)
-
                 });
-
-
-
                 showStatus('Your submission request has been sent. Because Google hides the cross-site response, this page cannot verify the server result. If you do not see it in the Website Submissions sheet, please contact the magazine team.', 'success');
-
                 magazineForm.reset();
-
                 resetFilesUI();
-
             } catch (err) {
-
                 showStatus('Could not prepare the submission: ' + (err.message || 'please try again.'), 'error');
-
             } finally {
-
                 submitBtn.disabled = false;
-
                 submitBtn.innerHTML = originalButtonHTML;
-
             }
-
         });
-
-
-
 function resetFilesUI() {
-
-            uploadedFiles = { prose: null, art: null, poetry: null };
-
+            uploadedFiles = { prose: null, art: [], poetry: null };
             artDriveLink = '';
-
             document.getElementById('artDriveLinkInput').value = '';
-
             ['prose', 'art', 'poetry'].forEach(type => {
-
 const prompt = document.getElementById(type + 'PromptContent');
-
 const preview = document.getElementById(type + 'FilePreview');
-
 const input = document.getElementById(type + 'FileInput');
-
                 if(prompt) prompt.classList.remove('hidden');
-
                 if(preview) preview.classList.add('hidden');
-
                 if(input) input.value = '';
-
             });
-
         }
-
     </script>
-
 </body>
-
 </html>
